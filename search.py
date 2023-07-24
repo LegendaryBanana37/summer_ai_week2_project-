@@ -18,7 +18,6 @@ Pacman agents (in searchAgents.py).
 """
 
 import util
-
 class SearchProblem:
     """
     This class outlines the structure of a search problem, but doesn't implement
@@ -86,11 +85,50 @@ def depthFirstSearch(problem: SearchProblem):
     print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     "*** YOUR CODE HERE ***"
+    visited = []
+    goal_found = False
+    frontier = util.Stack()
+    state = problem.getStartState()
+    moves = []
+    frontier.push((state, moves, 0))
+
+    while not goal_found:
+        node, moves, _ = frontier.pop()
+
+        if problem.isGoalState(node):
+            goal_found = True
+            return (moves)
+        else:
+            visited.append(node)
+            for state, move, _ in (problem.getSuccessors(node)):
+                if (not(state in visited)):
+                    frontier.push((state, moves + [move], _))
+                    
+                
+
+
+
     util.raiseNotDefined()
 
 def breadthFirstSearch(problem: SearchProblem):
-    """Search the shallowest nodes in the search tree first."""
-    "*** YOUR CODE HERE ***"
+    visited = []
+    goal_found = False
+    frontier = util.Queue()
+    state = problem.getStartState()
+    moves = []
+    frontier.push((state, moves, 0))
+
+    while not goal_found:
+        node, moves, _ = frontier.pop()
+
+        if problem.isGoalState(node):
+            goal_found = True
+            return (moves)
+        else:
+            visited.append(node)
+            for state, move, _ in (problem.getSuccessors(node)):
+                if (not(state in visited)):
+                    frontier.push((state, moves + [move], _))
     util.raiseNotDefined()
 
 def uniformCostSearch(problem: SearchProblem):
